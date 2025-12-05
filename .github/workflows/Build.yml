@@ -1,7 +1,22 @@
-name: Build 6.8.y
+name: Build Kernel
 
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build'
+        required: true
+        default: 'main'
+        type: string
+      create_release:
+        description: 'Create a release?'
+        required: true
+        default: false
+        type: boolean
+      release_name:
+        description: 'Release name (optional, defaults to branch name)'
+        required: false
+        type: string
 
 jobs:
   build-kernel:
@@ -11,7 +26,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
         with:
-          ref: ps4-linux-6.8.y
+          ref: ${{ inputs.branch }}
           submodules: recursive
 
       - name: Install dependencies
@@ -45,3 +60,14 @@ jobs:
         with:
           name: bzImage
           path: arch/x86/boot/bzImage
+
+      - name: Create Release
+        if: ${{ inputs.create_release }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.branch }}
+          name: ${{ inputs.release_name || inputs.branch }}
+          files: arch/x86/boot/bzImage
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
