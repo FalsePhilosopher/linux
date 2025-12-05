@@ -5,9 +5,21 @@ on:
     inputs:
       branch:
         description: 'Branch to build'
-        required: true
-        default: 'main'
-        type: string
+        default: 'ps4-linux-6.15.y'
+        type: choice
+        options:
+          - ps4-linux-6.15.y-baikal
+          - ps4-linux-6.15.y
+          - ps4-linux-6.15.y-baikal
+          - ps4-linux-6.12.y
+          - ps4-linux-6.9.y
+          - ps4-linux-6.8.y
+          - ps4-linux-6.6.y
+          - ps4-linux-6.1.y
+          - ps4-linux-5.16.y
+          - ps4-linux-5.15.y
+          - linux-5.15.y
+          - master
       create_release:
         description: 'Create a release?'
         required: true
