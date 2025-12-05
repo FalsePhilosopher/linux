@@ -10,7 +10,6 @@ on:
         options:
           - ps4-linux-6.15.y-baikal
           - ps4-linux-6.15.y
-          - ps4-linux-6.15.y-baikal
           - ps4-linux-6.12.y
           - ps4-linux-6.9.y
           - ps4-linux-6.8.y
